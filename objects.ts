@@ -1,12 +1,27 @@
+import { STANDARD_PAGE_SIZES } from "./constants.ts";
+import type { MediaBox } from "./interfaces.ts";
 import { objRepr } from "./utils.ts";
 
 class Page {
   parent: Pages | null = null;
 
-  constructor(public readonly objNumber: number) {}
+  constructor(
+    public readonly objNumber: number,
+    private readonly _mediaBox: MediaBox,
+  ) {}
 
   toString(): string {
-    return `Page ${this.objNumber} with parent ${this.parent?.objNumber}`;
+    const parentRef = this.parent
+      ? ` /Parent ${this.parent.objNumber} 0 R `
+      : " ";
+      
+    const mediaBoxStr =
+      `${this._mediaBox.llx} ${this._mediaBox.lly} ${this._mediaBox.urx} ${this._mediaBox.ury}`;
+
+    const objContent =
+      `<< /Type /Page /Parent${parentRef}/MediaBox [${mediaBoxStr}] /Contents 4 0 R >>`;
+
+    return objRepr(this.objNumber, objContent);
   }
 }
 
@@ -37,7 +52,7 @@ class Pages {
 
     const objContent =
       `<< /Type /Pages${parentRef}/Kids [${kidsRef}] /Count ${this.count} >>`;
-    
+
     return objRepr(this.objNumber, objContent);
   }
 }
@@ -50,7 +65,11 @@ class PagesBuilder {
   constructor(private _objNumber: number) {}
 
   addPage(): PagesBuilder {
-    this._leaves.push(new Page(this._objNumber++));
+    const urx = STANDARD_PAGE_SIZES.Letter.width;
+    const ury = STANDARD_PAGE_SIZES.Letter.height;
+    const mediaBox: MediaBox = { llx: 0, lly: 0, urx, ury };
+
+    this._leaves.push(new Page(this._objNumber++, mediaBox));
     return this;
   }
 
