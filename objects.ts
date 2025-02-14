@@ -1,3 +1,5 @@
+import { objRepr } from "./utils.ts";
+
 class Page {
   parent: Pages | null = null;
 
@@ -29,15 +31,14 @@ class Pages {
 
   toString(): string {
     const parentRef = this.parent
-      ? ` /Parent ${this.parent.objNumber} 0 R`
-      : "";
+      ? ` /Parent ${this.parent.objNumber} 0 R `
+      : " ";
     const kidsRef = this.kids.map((kid) => `${kid.objNumber} 0 R`).join(" ");
 
-    return [
-      `${this.objNumber} 0 obj`,
-      `<< /Type /Pages${parentRef} /Kids [${kidsRef}] /Count ${this.count} >>`,
-      "endobj",
-    ].join("\n");
+    const objContent =
+      `<< /Type /Pages${parentRef}/Kids [${kidsRef}] /Count ${this.count} >>`;
+    
+    return objRepr(this.objNumber, objContent);
   }
 }
 
@@ -65,7 +66,7 @@ class PagesBuilder {
 
   private _groupNodesIntoParents(nodes: (Pages | Page)[]): Pages[] {
     const newParents: Pages[] = [];
-    
+
     for (let i = 0; i < nodes.length; i += this._maxKids) {
       const parent = new Pages(this._objNumber++);
       parent.kids = nodes.slice(i, i + this._maxKids);
