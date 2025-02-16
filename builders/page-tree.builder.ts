@@ -6,7 +6,6 @@ import { Pages } from "../objects/pages.object.ts";
 export class PageTreeBuilder {
   private readonly _leaves: Page[] = [];
   private _maxKids = 6;
-  private _count = 0;
 
   constructor(private _objNumber: number) {}
 
@@ -35,11 +34,17 @@ export class PageTreeBuilder {
     for (let i = 0; i < nodes.length; i += this._maxKids) {
       const parent = new Pages(this._objNumber++);
       parent.kids = nodes.slice(i, i + this._maxKids);
-      this._count += parent.kids.length;
-      parent.count = this._count;
 
       for (const kid of parent.kids) {
         kid.parent = parent;
+
+        if (kid instanceof Page) {
+          parent.count += 1;
+        }
+
+        if (kid instanceof Pages) {
+          parent.count += kid.count;
+        }
       }
 
       newParents.push(parent);
