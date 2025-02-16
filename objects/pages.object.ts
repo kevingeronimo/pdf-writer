@@ -1,7 +1,8 @@
-import { objRepr } from "../utils.ts";
+import { ReprBuilder } from "../builders/repr.builder.ts";
+import type { ObjectRef } from "../interfaces.ts";
 import type { Page } from "./page.object.ts";
 
-export class Pages {
+export class Pages implements ObjectRef {
   parent: Pages | null = null;
   kids: (Pages | Page)[] = [];
   count = 0;
@@ -21,14 +22,15 @@ export class Pages {
   }
 
   toString(): string {
-    const parentRef = this.parent
-      ? ` /Parent ${this.parent.objNumber} 0 R `
-      : " ";
-    const kidsRef = this.kids.map((kid) => `${kid.objNumber} 0 R`).join(" ");
+    const reprBuilder = new ReprBuilder(this.objNumber);
+    reprBuilder.addType("Pages");
 
-    const objContent =
-      `<< /Type /Pages${parentRef}/Kids [${kidsRef}] /Count ${this.count} >>`;
-
-    return objRepr(this.objNumber, objContent);
+    if (this.parent) {
+      reprBuilder.addParent(this.parent);
+    }
+    
+    reprBuilder.addKids(this.kids);
+    reprBuilder.addCount(this.count);
+    return reprBuilder.build();
   }
 }

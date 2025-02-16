@@ -1,8 +1,8 @@
-import type { MediaBox } from "../interfaces.ts";
-import { objRepr } from "../utils.ts";
+import { ReprBuilder } from "../builders/repr.builder.ts";
+import type { MediaBox, ObjectRef } from "../interfaces.ts";
 import type { Pages } from "./pages.object.ts";
 
-export class Page {
+export class Page implements ObjectRef {
   parent: Pages | null = null;
 
   constructor(
@@ -11,16 +11,14 @@ export class Page {
   ) {}
 
   toString(): string {
-    const parentRef = this.parent
-      ? ` /Parent ${this.parent.objNumber} 0 R `
-      : " ";
+    const reprBuilder = new ReprBuilder(this.objNumber);
+    reprBuilder.addType("Page");
 
-    const mediaBoxStr =
-      `${this._mediaBox.llx} ${this._mediaBox.lly} ${this._mediaBox.urx} ${this._mediaBox.ury}`;
+    if (this.parent) {
+      reprBuilder.addParent(this.parent);
+    }
 
-    const objContent =
-      `<< /Type /Page /Parent${parentRef}/MediaBox [${mediaBoxStr}] /Contents 4 0 R >>`;
-
-    return objRepr(this.objNumber, objContent);
+    reprBuilder.addMediaBox(this._mediaBox);
+    return reprBuilder.build();
   }
 }

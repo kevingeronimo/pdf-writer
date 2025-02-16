@@ -9,3 +9,7 @@ export interface PageDimensions {
     width: number;
     height: number;
 }
+
+export interface ObjectRef {
+    objNumber: number;
+}
