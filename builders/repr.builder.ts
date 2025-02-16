@@ -1,4 +1,5 @@
-import type { MediaBox, ObjectRef } from "../interfaces.ts";
+import type { ObjectRef } from "../types/core.ts";
+import type { MediaBox } from "../types/page.ts";
 
 export class ReprBuilder {
     private readonly _dictValues: string[] = [];

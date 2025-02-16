@@ -1,6 +1,6 @@
 import { ReprBuilder } from "../builders/repr.builder.ts";
-import type { ObjectRef } from "../interfaces.ts";
-import type { Counter } from "../util.ts";
+import type { ObjectRef } from "../types/core.ts";
+import type { ObjCounter } from "../utils/obj-counter.util.ts";
 import type { Page } from "./page.object.ts";
 
 export class Pages implements ObjectRef {
@@ -9,8 +9,8 @@ export class Pages implements ObjectRef {
   kids: (Pages | Page)[] = [];
   count = 0;
 
-  constructor(counter: Counter) {
-    this.objNumber = counter.next();
+  constructor(objCounter: ObjCounter) {
+    this.objNumber = objCounter.next();
   }
 
   *[Symbol.iterator](): Generator<Pages | Page> {

@@ -1,7 +1,7 @@
 import { PageTreeBuilder } from "./builders/page-tree.builder.ts";
-import { Counter } from "./util.ts";
+import { ObjCounter } from "./utils/obj-counter.util.ts";
 
-const counter = new Counter();
+const counter = new ObjCounter();
 const builder = new PageTreeBuilder(counter, 6);
 
 for (let i = 0; i < 12; i++) {

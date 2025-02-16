@@ -1,14 +1,15 @@
 import { ReprBuilder } from "../builders/repr.builder.ts";
-import type { MediaBox, ObjectRef } from "../interfaces.ts";
-import type { Counter } from "../util.ts";
+import type { ObjectRef } from "../types/core.ts";
+import type { MediaBox } from "../types/page.ts";
+import type { ObjCounter } from "../utils/obj-counter.util.ts";
 import type { Pages } from "./pages.object.ts";
 
 export class Page implements ObjectRef {
   readonly objNumber: number;
   parent: Pages | null = null;
 
-  constructor(counter: Counter, private readonly _mediaBox: MediaBox) {
-    this.objNumber = counter.next();
+  constructor(objCounter: ObjCounter, private readonly _mediaBox: MediaBox) {
+    this.objNumber = objCounter.next();
   }
 
   toString(): string {
