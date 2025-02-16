@@ -1,6 +1,8 @@
 import { PageTreeBuilder } from "./builders/page-tree.builder.ts";
+import { Counter } from "./util.ts";
 
-const builder = new PageTreeBuilder(0);
+const counter = new Counter();
+const builder = new PageTreeBuilder(counter, 6);
 
 for (let i = 0; i < 12; i++) {
   builder.addPage();

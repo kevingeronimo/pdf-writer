@@ -2,19 +2,19 @@ import { PAGE_SIZES } from "../constants.ts";
 import type { MediaBox } from "../interfaces.ts";
 import { Page } from "../objects/page.object.ts";
 import { Pages } from "../objects/pages.object.ts";
+import type { Counter } from "../util.ts";
 
 export class PageTreeBuilder {
   private readonly _leaves: Page[] = [];
-  private _maxKids = 6;
 
-  constructor(private _objNumber: number) {}
+  constructor(private _counter: Counter, private _maxKids: number) {}
 
   addPage(): PageTreeBuilder {
     const urx = PAGE_SIZES.Letter.width;
     const ury = PAGE_SIZES.Letter.height;
     const mediaBox: MediaBox = { llx: 0, lly: 0, urx, ury };
 
-    this._leaves.push(new Page(this._objNumber++, mediaBox));
+    this._leaves.push(new Page(this._counter, mediaBox));
     return this;
   }
 
@@ -25,14 +25,14 @@ export class PageTreeBuilder {
       parents = this._groupNodesIntoParents(parents);
     }
 
-    return parents.length === 1 ? parents[0] : new Pages(this._objNumber++);
+    return parents.length === 1 ? parents[0] : new Pages(this._counter);
   }
 
   private _groupNodesIntoParents(nodes: (Pages | Page)[]): Pages[] {
     const newParents: Pages[] = [];
 
     for (let i = 0; i < nodes.length; i += this._maxKids) {
-      const parent = new Pages(this._objNumber++);
+      const parent = new Pages(this._counter);
       parent.kids = nodes.slice(i, i + this._maxKids);
 
       for (const kid of parent.kids) {

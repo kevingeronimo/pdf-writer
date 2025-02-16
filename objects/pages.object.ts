@@ -1,13 +1,17 @@
 import { ReprBuilder } from "../builders/repr.builder.ts";
 import type { ObjectRef } from "../interfaces.ts";
+import type { Counter } from "../util.ts";
 import type { Page } from "./page.object.ts";
 
 export class Pages implements ObjectRef {
+  readonly objNumber: number;
   parent: Pages | null = null;
   kids: (Pages | Page)[] = [];
   count = 0;
 
-  constructor(public readonly objNumber: number) {}
+  constructor(counter: Counter) {
+    this.objNumber = counter.next();
+  }
 
   *[Symbol.iterator](): Generator<Pages | Page> {
     const stack: typeof this.kids = [this];
@@ -28,7 +32,7 @@ export class Pages implements ObjectRef {
     if (this.parent) {
       reprBuilder.addParent(this.parent);
     }
-    
+
     reprBuilder.addKids(this.kids);
     reprBuilder.addCount(this.count);
     return reprBuilder.build();
