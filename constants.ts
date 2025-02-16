@@ -1,9 +1,7 @@
 import type { PageDimensions } from "./interfaces.ts";
 
-enum PaperSize {
-  Letter = "Letter",
-}
+type PaperSize = "Letter";
 
-export const STANDARD_PAGE_SIZES: Record<PaperSize, PageDimensions> = {
-  [PaperSize.Letter]: { width: 612, height: 792 },
+export const PAGE_SIZES: Record<PaperSize, PageDimensions> = {
+  Letter: { width: 612, height: 792 },
 };
