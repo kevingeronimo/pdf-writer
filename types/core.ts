@@ -1,3 +1,3 @@
 export interface ObjectRef {
-    objNumber: number;
+  objNumber: number;
 }
