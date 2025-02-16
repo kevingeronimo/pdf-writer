@@ -1,6 +1,6 @@
-import { PagesBuilder } from "./builders/page.builder.ts";
+import { PageTreeBuilder } from "./builders/page-tree.builder.ts";
 
-const builder = new PagesBuilder(0);
+const builder = new PageTreeBuilder(0);
 
 for (let i = 0; i < 12; i++) {
   builder.addPage();

@@ -3,14 +3,14 @@ import type { MediaBox } from "../interfaces.ts";
 import { Page } from "../objects/page.object.ts";
 import { Pages } from "../objects/pages.object.ts";
 
-export class PagesBuilder {
+export class PageTreeBuilder {
   private readonly _leaves: Page[] = [];
   private _maxKids = 6;
   private _count = 0;
 
   constructor(private _objNumber: number) {}
 
-  addPage(): PagesBuilder {
+  addPage(): PageTreeBuilder {
     const urx = PAGE_SIZES.Letter.width;
     const ury = PAGE_SIZES.Letter.height;
     const mediaBox: MediaBox = { llx: 0, lly: 0, urx, ury };
