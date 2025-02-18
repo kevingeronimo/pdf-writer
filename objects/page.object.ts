@@ -1,26 +1,23 @@
-import { ReprBuilder } from "../builders/repr.builder.ts";
-import type { ObjectRef } from "../types/core.ts";
 import type { MediaBox } from "../types/page.ts";
 import type { ObjCounter } from "../utils/obj-counter.util.ts";
+import { IndirectObject } from "./indirect.object.ts";
 import type { Pages } from "./pages.object.ts";
 
-export class Page implements ObjectRef {
-  readonly objNumber: number;
+export class Page extends IndirectObject {
   parent: Pages | null = null;
 
   constructor(objCounter: ObjCounter, private readonly _mediaBox: MediaBox) {
-    this.objNumber = objCounter.next();
+    super(objCounter);
   }
 
-  toString(): string {
-    const reprBuilder = new ReprBuilder(this.objNumber);
-    reprBuilder.addType("Page");
+  override toString(): string {
+    const dictFields = ["/Type /Page"];
 
     if (this.parent) {
-      reprBuilder.addParent(this.parent);
+      dictFields.push(`/Parent ${this.parent.objRef}`);
     }
+    dictFields.push(`/MediaBox [${this._mediaBox.join(" ")}]`);
 
-    reprBuilder.addMediaBox(this._mediaBox);
-    return reprBuilder.build();
+    return `${this.objNumber} 0 obj\n<< ${dictFields.join(" ")} >>\nendobj`;
   }
 }

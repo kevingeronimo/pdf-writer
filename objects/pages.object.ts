@@ -1,16 +1,14 @@
-import { ReprBuilder } from "../builders/repr.builder.ts";
-import type { ObjectRef } from "../types/core.ts";
 import type { ObjCounter } from "../utils/obj-counter.util.ts";
+import { IndirectObject } from "./indirect.object.ts";
 import type { Page } from "./page.object.ts";
 
-export class Pages implements ObjectRef {
-  readonly objNumber: number;
+export class Pages extends IndirectObject {
   parent: Pages | null = null;
   kids: (Pages | Page)[] = [];
   count = 0;
 
   constructor(objCounter: ObjCounter) {
-    this.objNumber = objCounter.next();
+    super(objCounter);
   }
 
   *[Symbol.iterator](): Generator<Pages | Page> {
@@ -25,16 +23,15 @@ export class Pages implements ObjectRef {
     }
   }
 
-  toString(): string {
-    const reprBuilder = new ReprBuilder(this.objNumber);
-    reprBuilder.addType("Pages");
+  override toString() {
+    const dictFields = ["/Type /Pages"];
 
     if (this.parent) {
-      reprBuilder.addParent(this.parent);
+      dictFields.push(`/Parent ${this.parent.objRef}`);
     }
+    dictFields.push(`/Kids [${this.kids.map((kid) => kid.objRef).join(" ")}]`);
+    dictFields.push(`/Count ${this.count}`);
 
-    reprBuilder.addKids(this.kids);
-    reprBuilder.addCount(this.count);
-    return reprBuilder.build();
+    return `${this.objNumber} 0 obj\n<< ${dictFields.join(" ")} >>\nendobj`;
   }
 }

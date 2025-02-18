@@ -1,8 +1,2 @@
-export interface MediaBox {
-  llx: number;
-  lly: number;
-  urx: number;
-  ury: number;
-}
-
+export type MediaBox = [number, number, number, number];
 export type PaperSize = "Letter";
