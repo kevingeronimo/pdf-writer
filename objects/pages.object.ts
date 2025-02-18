@@ -1,6 +1,6 @@
 import type { ObjCounter } from "../utils/obj-counter.util.ts";
 import { IndirectObject } from "./indirect.object.ts";
-import type { Page } from "./page.object.ts";
+import { Page } from "./page.object.ts";
 
 export class Pages extends IndirectObject {
   parent: Pages | null = null;
@@ -21,6 +21,40 @@ export class Pages extends IndirectObject {
         }
       }
     }
+  }
+
+  static fromKids(kids: Page[], maxKids: number, objCounter: ObjCounter): Pages {
+    let parents = Pages._groupKids(kids, maxKids, objCounter);
+
+    while (parents.length > 1) {
+      parents = Pages._groupKids(parents, maxKids, objCounter);
+    }
+
+    return parents.length === 1 ? parents[0] : new Pages(objCounter);
+  }
+
+  private static _groupKids(nodes: (Pages | Page)[], maxKids: number, objCounter: ObjCounter): Pages[] {
+    const newParents: Pages[] = [];
+
+    for (let i = 0; i < nodes.length; i += maxKids) {
+      const parent = new Pages(objCounter);
+      parent.kids = nodes.slice(i, i + maxKids);
+
+      for (const kid of parent.kids) {
+        kid.parent = parent;
+
+        if (kid instanceof Page) {
+          parent.count += 1;
+        }
+
+        if (kid instanceof Pages) {
+          parent.count += kid.count;
+        }
+      }
+
+      newParents.push(parent);
+    }
+    return newParents;
   }
 
   override toString() {

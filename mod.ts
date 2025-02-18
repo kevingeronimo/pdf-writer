@@ -1,14 +1,16 @@
-import { PageTreeBuilder } from "./builders/page-tree.builder.ts";
+import { PAGE_SIZES } from "./constants/page-sizes.constant.ts";
+import { Page } from "./objects/page.object.ts";
+import { Pages } from "./objects/pages.object.ts";
 import { ObjCounter } from "./utils/obj-counter.util.ts";
 
 const counter = new ObjCounter();
-const builder = new PageTreeBuilder(counter, 6);
+const kids: Page[] = []
 
 for (let i = 0; i < 12; i++) {
-  builder.addPage();
+  kids.push(new Page(counter, PAGE_SIZES.Letter));
 }
 
-const root = builder.build();
+const pages = Pages.fromKids(kids, 6, counter);
 
 // Deno.bench("Write Execution time", () => {
 //   builder.build();
@@ -18,6 +20,6 @@ const root = builder.build();
 //   for (const _node of root) {}
 // });
 
-for (const node of root) {
+for (const node of pages) {
   console.log(node.toString());
 }
