@@ -13,11 +13,11 @@ for (let i = 0; i < 12; i++) {
 const pages = Pages.fromKids(kids, 6, counter);
 
 // Deno.bench("Write Execution time", () => {
-//   builder.build();
+//   const pages = Pages.fromKids(kids, 6, counter);
 // });
 
 // Deno.bench("Read Execution time", () => {
-//   for (const _node of root) {}
+//   for (const _node of pages) {}
 // });
 
 for (const node of pages) {

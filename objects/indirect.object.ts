@@ -12,7 +12,7 @@ export class IndirectObject {
         return `${this.objNumber} 0 R`;
     }
 
-    obRepr(dictionary: string): string {
+    objRepr(dictionary: string): string {
         return `${this.objNumber} 0 obj\n${dictionary}\nendobj`;
     }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "pdf-writer",
+  "name": "@kevingeronimo/pdf-writer",
   "version": "0.1.0",
   "exports": "./mod.ts",
   "tasks": {
