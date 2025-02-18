@@ -1,4 +1,4 @@
-import type { MediaBox } from "../types/page.ts";
+import type { MediaBox } from "../types/core.ts";
 import type { ObjCounter } from "../utils/obj-counter.util.ts";
 import { IndirectObject } from "./indirect.object.ts";
 import type { Pages } from "./pages.object.ts";
