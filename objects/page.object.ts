@@ -18,6 +18,7 @@ export class Page extends IndirectObject {
     }
     dictFields.push(`/MediaBox [${this._mediaBox.join(" ")}]`);
 
-    return `${this.objNumber} 0 obj\n<< ${dictFields.join(" ")} >>\nendobj`;
+    const dictionary = `<< ${dictFields.join(" ")} >>`;
+    return this.obRepr(dictionary);
   }
 }

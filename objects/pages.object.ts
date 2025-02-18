@@ -66,6 +66,7 @@ export class Pages extends IndirectObject {
     dictFields.push(`/Kids [${this.kids.map((kid) => kid.objRef).join(" ")}]`);
     dictFields.push(`/Count ${this.count}`);
 
-    return `${this.objNumber} 0 obj\n<< ${dictFields.join(" ")} >>\nendobj`;
+    const dictionary = `<< ${dictFields.join(" ")} >>`;
+    return this.obRepr(dictionary);
   }
 }

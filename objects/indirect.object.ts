@@ -11,4 +11,8 @@ export class IndirectObject {
     get objRef(): ObjectRef {
         return `${this.objNumber} 0 R`;
     }
+
+    obRepr(dictionary: string): string {
+        return `${this.objNumber} 0 obj\n${dictionary}\nendobj`;
+    }
 }
