@@ -2,17 +2,17 @@ import type { ObjectRef } from "../types/core.ts";
 import type { ObjCounter } from "../utils/obj-counter.util.ts";
 
 export class IndirectObject {
-    readonly objNumber;
+    private _objNumber;
 
     constructor(objCounter: ObjCounter) {
-        this.objNumber = objCounter.next();
+        this._objNumber = objCounter.next();
     }
 
     get objRef(): ObjectRef {
-        return `${this.objNumber} 0 R`;
+        return `${this._objNumber} 0 R`;
     }
 
-    objRepr(dictionary: string): string {
-        return `${this.objNumber} 0 obj\n${dictionary}\nendobj`;
+    labeled(objRepr: string): string {
+        return `${this._objNumber} 0 obj\n${objRepr}\nendobj`;
     }
 }
