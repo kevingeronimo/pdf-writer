@@ -1,7 +1,7 @@
 import type { ObjectRef } from "../types/core.ts";
 import type { ObjCounter } from "../utils/obj-counter.util.ts";
 
-export class IndirectObject {
+export abstract class IndirectObject {
     private _objNumber;
 
     constructor(objCounter: ObjCounter) {
@@ -12,7 +12,7 @@ export class IndirectObject {
         return `${this._objNumber} 0 R`;
     }
 
-    labeled(objRepr: string): string {
+    protected withLabel(objRepr: string): string {
         return `${this._objNumber} 0 obj\n${objRepr}\nendobj`;
     }
 }
