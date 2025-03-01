@@ -23,17 +23,25 @@ export class Pages extends IndirectObject {
     }
   }
 
-  static fromKids(kids: Page[], maxKids: number, objCounter: ObjCounter): Pages {
-    let parents = Pages._groupKids(kids, maxKids, objCounter);
+  static fromKids(
+    objCounter: ObjCounter,
+    kids: Page[],
+    maxKids: number,
+  ): Pages {
+    let parents = Pages._groupKids(objCounter, kids, maxKids);
 
     while (parents.length > 1) {
-      parents = Pages._groupKids(parents, maxKids, objCounter);
+      parents = Pages._groupKids(objCounter, parents, maxKids);
     }
 
     return parents.length === 1 ? parents[0] : new Pages(objCounter);
   }
 
-  private static _groupKids(kids: (Pages | Page)[], maxKids: number, objCounter: ObjCounter): Pages[] {
+  private static _groupKids(
+    objCounter: ObjCounter,
+    kids: (Pages | Page)[],
+    maxKids: number,
+  ): Pages[] {
     const newParents: Pages[] = [];
 
     for (let i = 0; i < kids.length; i += maxKids) {
