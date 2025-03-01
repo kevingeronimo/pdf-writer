@@ -1,4 +1,4 @@
-import type { ObjectRef } from "../types/core.ts";
+import type { IndirectRef } from "../types/core.ts";
 import type { ObjCounter } from "../utils/obj-counter.util.ts";
 
 export abstract class IndirectObject {
@@ -8,7 +8,7 @@ export abstract class IndirectObject {
         this._objNumber = objCounter.next();
     }
 
-    get objRef(): ObjectRef {
+    get indirectRef(): IndirectRef {
         return `${this._objNumber} 0 R`;
     }
 

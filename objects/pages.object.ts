@@ -69,9 +69,11 @@ export class Pages extends IndirectObject {
     const dictFields = ["/Type /Pages"];
 
     if (this.parent) {
-      dictFields.push(`/Parent ${this.parent.objRef}`);
+      dictFields.push(`/Parent ${this.parent.indirectRef}`);
     }
-    dictFields.push(`/Kids [${this.kids.map((kid) => kid.objRef).join(" ")}]`);
+    dictFields.push(
+      `/Kids [${this.kids.map((kid) => kid.indirectRef).join(" ")}]`,
+    );
     dictFields.push(`/Count ${this.count}`);
 
     const dictionary = `<< ${dictFields.join(" ")} >>`;

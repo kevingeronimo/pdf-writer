@@ -14,7 +14,7 @@ export class Page extends IndirectObject {
     const dictFields = ["/Type /Page"];
 
     if (this.parent) {
-      dictFields.push(`/Parent ${this.parent.objRef}`);
+      dictFields.push(`/Parent ${this.parent.indirectRef}`);
     }
     dictFields.push(`/MediaBox [${this._mediaBox.join(" ")}]`);
 
