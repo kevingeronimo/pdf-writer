@@ -23,12 +23,12 @@ export class Pages extends IndirectObject {
     }
   }
 
-  static fromKids(
+  static balancedFromLeaves(
     objCounter: ObjCounter,
-    kids: Page[],
+    leaves: Page[],
     maxKids: number,
   ): Pages {
-    let parents = Pages._groupKids(objCounter, kids, maxKids);
+    let parents = Pages._groupKids(objCounter, leaves, maxKids);
 
     while (parents.length > 1) {
       parents = Pages._groupKids(objCounter, parents, maxKids);

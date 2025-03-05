@@ -10,7 +10,7 @@ for (let i = 0; i < 12; i++) {
   kids.push(new Page(counter, PAGE_SIZES.Letter));
 }
 
-const pages = Pages.fromKids(counter, kids, 6);
+const pages = Pages.balancedFromLeaves(counter, kids, 6);
 
 // Deno.bench("Write Execution time", () => {
 //   const pages = Pages.fromKids(kids, 6, counter);
