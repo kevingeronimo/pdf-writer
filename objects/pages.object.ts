@@ -23,7 +23,7 @@ export class Pages extends IndirectObject {
     }
   }
 
-  static balancedFromLeaves(
+  static fromLeaves(
     objCounter: ObjCounter,
     leaves: Page[],
     maxKids: number,
