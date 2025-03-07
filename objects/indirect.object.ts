@@ -1,10 +1,12 @@
 import type { IndirectRef } from "../types/core.ts";
 import type { ObjCounter } from "../utils/obj-counter.util.ts";
+import { DirectObject } from "./direct.object.ts";
 
-export abstract class IndirectObject {
+export abstract class IndirectObject extends DirectObject {
   readonly objNumber;
 
   constructor(objCounter: ObjCounter) {
+    super();
     this.objNumber = objCounter.next();
   }
 
@@ -12,9 +14,7 @@ export abstract class IndirectObject {
     return `${this.objNumber} 0 R`;
   }
 
-  protected abstract objRepr(): string;
-
-  toString(): string {
+  override toString(): string {
     return `${this.objNumber} 0 obj\n${this.objRepr()}\nendobj`;
   }
 }
