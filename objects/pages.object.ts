@@ -65,7 +65,7 @@ export class Pages extends IndirectObject {
     return newParents;
   }
 
-  override toString() {
+  objRepr() {
     const dictFields = ["/Type /Pages"];
 
     if (this.parent) {
@@ -76,7 +76,6 @@ export class Pages extends IndirectObject {
     );
     dictFields.push(`/Count ${this.count}`);
 
-    const dictionary = `<< ${dictFields.join(" ")} >>`;
-    return this.withLabel(dictionary);
+    return `<< ${dictFields.join(" ")} >>`;
   }
 }

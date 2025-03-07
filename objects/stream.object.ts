@@ -6,9 +6,9 @@ export class StreamObject extends IndirectObject {
     super(objCounter);
   }
 
-  override toString(): string {
+  objRepr(): string {
     const dictionary = "<< /Length 0 >>";
     const stream = "stream\nendstream";
-    return this.withLabel(`${dictionary}\n${stream}`);
+    return `${dictionary}\n${stream}`;
   }
 }

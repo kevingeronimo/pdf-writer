@@ -10,7 +10,7 @@ export class Page extends IndirectObject {
     super(objCounter);
   }
 
-  override toString(): string {
+  objRepr(): string {
     const dictFields = ["/Type /Page"];
 
     if (this.parent) {
@@ -18,7 +18,6 @@ export class Page extends IndirectObject {
     }
     dictFields.push(`/MediaBox [${this._mediaBox.join(" ")}]`);
 
-    const dictionary = `<< ${dictFields.join(" ")} >>`;
-    return this.withLabel(dictionary);
+    return `<< ${dictFields.join(" ")} >>`;
   }
 }
