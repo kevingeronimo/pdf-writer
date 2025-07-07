@@ -18,10 +18,7 @@ export class Pages extends IndirectObject {
     }
   }
 
-  static fromLeaves(
-    leaves: Page[],
-    maxKids: number,
-  ): Pages {
+  static fromLeaves(leaves: Page[], maxKids: number): Pages {
     let parents = Pages._groupKids(leaves, maxKids);
 
     while (parents.length > 1) {
@@ -31,10 +28,7 @@ export class Pages extends IndirectObject {
     return parents.length === 1 ? parents[0] : new Pages();
   }
 
-  private static _groupKids(
-    kids: (Pages | Page)[],
-    maxKids: number,
-  ): Pages[] {
+  private static _groupKids(kids: (Pages | Page)[], maxKids: number): Pages[] {
     const newParents: Pages[] = [];
 
     for (let i = 0; i < kids.length; i += maxKids) {
