@@ -1,13 +1,14 @@
 import type { IndirectRef } from "../types/core.ts";
-import type { ObjCounter } from "../utils/obj-counter.util.ts";
 import { DirectObject } from "./direct.object.ts";
 
 export abstract class IndirectObject extends DirectObject {
   readonly objNumber;
+  private static _count = 0;
 
-  constructor(objCounter: ObjCounter) {
+  constructor() {
     super();
-    this.objNumber = objCounter.next();
+    IndirectObject._count++;
+    this.objNumber = IndirectObject._count;
   }
 
   get indirectRef(): IndirectRef {

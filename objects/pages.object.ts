@@ -1,4 +1,3 @@
-import type { ObjCounter } from "../utils/obj-counter.util.ts";
 import { IndirectObject } from "./indirect.object.ts";
 import { Page } from "./page.object.ts";
 
@@ -6,10 +5,6 @@ export class Pages extends IndirectObject {
   parent: Pages | null = null;
   kids: (Pages | Page)[] = [];
   count = 0;
-
-  constructor(objCounter: ObjCounter) {
-    super(objCounter);
-  }
 
   *[Symbol.iterator](): Generator<Pages | Page> {
     const stack: typeof this.kids = [this];
@@ -24,28 +19,26 @@ export class Pages extends IndirectObject {
   }
 
   static fromLeaves(
-    objCounter: ObjCounter,
     leaves: Page[],
     maxKids: number,
   ): Pages {
-    let parents = Pages._groupKids(objCounter, leaves, maxKids);
+    let parents = Pages._groupKids(leaves, maxKids);
 
     while (parents.length > 1) {
-      parents = Pages._groupKids(objCounter, parents, maxKids);
+      parents = Pages._groupKids(parents, maxKids);
     }
 
-    return parents.length === 1 ? parents[0] : new Pages(objCounter);
+    return parents.length === 1 ? parents[0] : new Pages();
   }
 
   private static _groupKids(
-    objCounter: ObjCounter,
     kids: (Pages | Page)[],
     maxKids: number,
   ): Pages[] {
     const newParents: Pages[] = [];
 
     for (let i = 0; i < kids.length; i += maxKids) {
-      const parent = new Pages(objCounter);
+      const parent = new Pages();
       parent.kids = kids.slice(i, i + maxKids);
 
       for (const kid of parent.kids) {

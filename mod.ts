@@ -1,16 +1,14 @@
 import { PAGE_SIZES } from "./constants/page-sizes.constant.ts";
 import { Page } from "./objects/page.object.ts";
 import { Pages } from "./objects/pages.object.ts";
-import { ObjCounter } from "./utils/obj-counter.util.ts";
 
-const counter = new ObjCounter();
 const kids: Page[] = []
 
 for (let i = 0; i < 12; i++) {
-  kids.push(new Page(counter, PAGE_SIZES.Letter));
+  kids.push(new Page(PAGE_SIZES.Letter));
 }
 
-const pages = Pages.fromLeaves(counter, kids, 6);
+const pages = Pages.fromLeaves(kids, 6);
 
 // Deno.bench("Write Execution time", () => {
 //   const pages = Pages.fromKids(kids, 6, counter);
