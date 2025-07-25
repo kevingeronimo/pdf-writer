@@ -18,22 +18,22 @@ export class Pages extends IndirectObject {
     }
   }
 
-  static fromLeaves(leaves: Page[], maxKids: number): Pages {
-    let parents = Pages._groupKids(leaves, maxKids);
+  static buildTreeFromLeaves(leaves: Page[], maxChildren: number): Pages {
+    let parents = Pages.groupChildren(leaves, maxChildren);
 
     while (parents.length > 1) {
-      parents = Pages._groupKids(parents, maxKids);
+      parents = Pages.groupChildren(parents, maxChildren);
     }
 
     return parents.length === 1 ? parents[0] : new Pages();
   }
 
-  private static _groupKids(kids: (Pages | Page)[], maxKids: number): Pages[] {
+  private static groupChildren(nodes: (Pages | Page)[], maxChildren: number): Pages[] {
     const newParents: Pages[] = [];
 
-    for (let i = 0; i < kids.length; i += maxKids) {
+    for (let i = 0; i < nodes.length; i += maxChildren) {
       const parent = new Pages();
-      parent.kids = kids.slice(i, i + maxKids);
+      parent.kids = nodes.slice(i, i + maxChildren);
 
       for (const kid of parent.kids) {
         kid.parent = parent;

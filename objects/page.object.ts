@@ -5,7 +5,7 @@ import type { Pages } from "./pages.object.ts";
 export class Page extends IndirectObject {
   parent: Pages | null = null;
 
-  constructor(private readonly _mediaBox: MediaBox) {
+  constructor(private readonly mediaBox: MediaBox) {
     super();
   }
 
@@ -13,7 +13,7 @@ export class Page extends IndirectObject {
     const entries: string[] = [
       "/Type /Page",
       this.parent ? `/Parent ${this.parent.ref}` : "",
-      `/MediaBox [${this._mediaBox.join(" ")}]`,
+      `/MediaBox [${this.mediaBox.join(" ")}]`,
     ].filter(Boolean);
 
     return `<< ${entries.join(" ")} >>`;

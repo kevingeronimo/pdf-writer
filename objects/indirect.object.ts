@@ -3,12 +3,12 @@ import { DirectObject } from "./direct.object.ts";
 
 export abstract class IndirectObject extends DirectObject {
   readonly id;
-  private static _count = 0;
+  private static count = 0;
 
   constructor() {
     super();
-    IndirectObject._count++;
-    this.id = IndirectObject._count;
+    IndirectObject.count++;
+    this.id = IndirectObject.count;
   }
 
   get ref(): IndirectRef {
