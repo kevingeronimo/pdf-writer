@@ -1,7 +1,7 @@
 export abstract class DirectObject {
-    protected abstract objRepr(): string;
+    protected abstract serialize(): string;
 
     toString(): string {
-        return this.objRepr();
+        return this.serialize();
     }
 }

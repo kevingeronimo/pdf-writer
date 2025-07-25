@@ -16,6 +16,6 @@ export abstract class IndirectObject extends DirectObject {
   }
 
   override toString(): string {
-    return `${this.objNumber} 0 obj\n${this.objRepr()}\nendobj`;
+    return `${this.objNumber} 0 obj\n${this.serialize()}\nendobj`;
   }
 }

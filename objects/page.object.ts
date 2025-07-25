@@ -9,14 +9,13 @@ export class Page extends IndirectObject {
     super();
   }
 
-  objRepr(): string {
-    const dictFields = ["/Type /Page"];
+  serialize(): string {
+    const entries: string[] = [
+      "/Type /Page",
+      this.parent ? `/Parent ${this.parent.indirectRef}` : "",
+      `/MediaBox [${this._mediaBox.join(" ")}]`,
+    ].filter(Boolean);
 
-    if (this.parent) {
-      dictFields.push(`/Parent ${this.parent.indirectRef}`);
-    }
-    dictFields.push(`/MediaBox [${this._mediaBox.join(" ")}]`);
-
-    return `<< ${dictFields.join(" ")} >>`;
+    return `<< ${entries.join(" ")} >>`;
   }
 }

@@ -52,17 +52,14 @@ export class Pages extends IndirectObject {
     return newParents;
   }
 
-  objRepr() {
-    const dictFields = ["/Type /Pages"];
-
-    if (this.parent) {
-      dictFields.push(`/Parent ${this.parent.indirectRef}`);
-    }
-    dictFields.push(
+  serialize() {
+    const entries: string[] = [
+      "/Type /Pages",
+      this.parent ? `/Parent ${this.parent.indirectRef}` : "",
       `/Kids [${this.kids.map((kid) => kid.indirectRef).join(" ")}]`,
-    );
-    dictFields.push(`/Count ${this.count}`);
+      `/Count ${this.count}`,
+    ].filter(Boolean);
 
-    return `<< ${dictFields.join(" ")} >>`;
+    return `<< ${entries.join(" ")} >>`;
   }
 }
