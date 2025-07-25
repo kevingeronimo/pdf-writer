@@ -12,7 +12,7 @@ export class Page extends IndirectObject {
   serialize(): string {
     const entries: string[] = [
       "/Type /Page",
-      this.parent ? `/Parent ${this.parent.indirectRef}` : "",
+      this.parent ? `/Parent ${this.parent.ref}` : "",
       `/MediaBox [${this._mediaBox.join(" ")}]`,
     ].filter(Boolean);
 

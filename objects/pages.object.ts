@@ -55,8 +55,8 @@ export class Pages extends IndirectObject {
   serialize() {
     const entries: string[] = [
       "/Type /Pages",
-      this.parent ? `/Parent ${this.parent.indirectRef}` : "",
-      `/Kids [${this.kids.map((kid) => kid.indirectRef).join(" ")}]`,
+      this.parent ? `/Parent ${this.parent.ref}` : "",
+      `/Kids [${this.kids.map((kid) => kid.ref).join(" ")}]`,
       `/Count ${this.count}`,
     ].filter(Boolean);
 
