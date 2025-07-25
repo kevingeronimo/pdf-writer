@@ -28,7 +28,10 @@ export class Pages extends IndirectObject {
     return parents.length === 1 ? parents[0] : new Pages();
   }
 
-  private static groupChildren(nodes: (Pages | Page)[], maxChildren: number): Pages[] {
+  private static groupChildren(
+    nodes: (Pages | Page)[],
+    maxChildren: number,
+  ): Pages[] {
     const newParents: Pages[] = [];
 
     for (let i = 0; i < nodes.length; i += maxChildren) {
